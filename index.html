@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Нуриддин — личная страница</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #0f0f1a;
+    color: #eee;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== Анимированный фон ===== */
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 20% 20%, #1b1b3a, #0f0f1a 60%);
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.55;
+    animation: move 18s ease-in-out infinite alternate;
+  }
+  .blob1 { width: 400px; height: 400px; background: #7b2ff7; top: -100px; left: -100px; }
+  .blob2 { width: 350px; height: 350px; background: #f107a3; bottom: -80px; right: -80px; animation-delay: -6s; }
+  .blob3 { width: 300px; height: 300px; background: #00c6ff; top: 40%; left: 50%; animation-delay: -12s; }
+
+  @keyframes move {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(60px, -40px) scale(1.2); }
+  }
+
+  /* ===== Шапка ===== */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7b2ff7, #f107a3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 0 50px rgba(123, 47, 247, 0.6);
+    animation: float 4s ease-in-out infinite;
+    margin-bottom: 30px;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  h1 {
+    font-size: clamp(40px, 8vw, 80px);
+    background: linear-gradient(90deg, #7b2ff7, #f107a3, #00c6ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
+    margin-bottom: 15px;
+  }
+
+  @keyframes shine {
+    to { background-position: 200% center; }
+  }
+
+  .subtitle {
+    font-size: clamp(16px, 3vw, 22px);
+    color: #b0b0c0;
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    font-size: 28px;
+    animation: bounce 1.5s infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+
+  /* ===== Секции ===== */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+
+  h2 {
+    font-size: clamp(28px, 5vw, 42px);
+    margin-bottom: 40px;
+    text-align: center;
+    color: #fff;
+  }
+
+  h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    margin: 15px auto 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  }
+
+  /* ===== Карточки интересов ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px 25px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(123, 47, 247, 0.3);
+  }
+
+  .card .icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .card p {
+    color: #b0b0c0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ===== Навыки ===== */
+  .skill {
+    margin-bottom: 22px;
+  }
+
+  .skill-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
+  .bar {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #7b2ff7, #f107a3);
+    transition: width 1.5s ease;
+  }
+
+  /* ===== Цитата ===== */
+  .quote {
+    text-align: center;
+    font-size: clamp(20px, 4vw, 30px);
+    font-style: italic;
+    color: #d0d0e0;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .quote::before { content: '«'; color: #f107a3; }
+  .quote::after  { content: '»'; color: #f107a3; }
+
+  /* ===== Кнопка ===== */
+  .cta {
+    text-align: center;
+    padding-bottom: 100px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 16px 45px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #7b2ff7, #f107a3);
+    box-shadow: 0 10px 30px rgba(241, 7, 163, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(241, 7, 163, 0.6);
+  }
+
+  /* ===== Подвал ===== */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #666;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Появление при скролле */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Анимированный фон -->
+<div class="bg">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+</div>
+
+<!-- Шапка -->
+<header>
+  <div class="avatar">Н</div>
+  <h1>Нуриддин</h1>
+  <p class="subtitle">Добро пожаловать на мою личную страницу ✨</p>
+  <div class="scroll-hint">⬇</div>
+</header>
+
+<!-- Обо мне -->
+<section class="reveal">
+  <h2>Обо мне</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="icon">🎯</span>
+      <h3>Целеустремлённый</h3>
+      <p>Всегда иду к своей цели и не останавливаюсь на полпути.</p>
+    </div>
+    <div class="card">
+      <span class="icon">💻</span>
+      <h3>Технологии</h3>
+      <p>Интересуюсь программированием, сайтами и всем, что связано с IT.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🤝</span>
+      <h3>Дружелюбный</h3>
+      <p>Легко нахожу общий язык с людьми и ценю настоящую дружбу.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🚀</span>
+      <h3>Мечтатель</h3>
+      <p>Верю, что большие мечты начинаются с маленьких шагов.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Навыки -->
+<section class="reveal">
+  <h2>Мои навыки</h2>
+
+  <div class="skill">
+    <div class="skill-head"><span>Программирование</span><span>85%</span></div>
+    <div class="bar"><span data-width="85%"></span></div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-head"><span>Веб-разработка</span><span>75%</span></div>
+    <div class="bar"><span data-width="75%"></span></div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-head"><span>Коммуникация</span><span>90%</span></div>
+    <div class="bar"><span data-width="90%"></span></div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-head"><span>Креативность</span><span>80%</span></div>
+    <div class="bar"><span data-width="80%"></span></div>
+  </div>
+</section>
+
+<!-- Цитата -->
+<section class="reveal">
+  <h2>Мой девиз</h2>
+  <p class="quote">Не жди подходящего момента — создай его сам</p>
+</section>
+
+<!-- Кнопка -->
+<div class="cta reveal">
+  <button class="btn" onclick="sayHi()">Связаться со мной 💬</button>
+</div>
+
+<footer>
+  © 2026 Нуриддин · Сделано с ❤️
+</footer>
+
+<script>
+  // Появление секций при скролле
+  const reveals = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        // Анимация полосок навыков
+        entry.target.querySelectorAll('.bar span').forEach(bar => {
+          bar.style.width = bar.dataset.width;
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Кнопка "Связаться"
+  function sayHi() {
+    alert('Привет! 👋 Спасибо, что заглянул на страницу Нуриддина!');
+  }
+</script>
+
+</body>
+</html>
